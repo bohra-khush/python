@@ -1,0 +1,1987 @@
+SLIP-1
+
+Q1.
+
+#Q1.
+
+numbers = [10, 20, 30, 40, 50]   # sample list
+
+total = sum(numbers)            # add all numbers
+count = len(numbers)            # total elements
+
+average = total / count         # formula
+
+print("Average =", average)
+
+
+
+SLIP-2
+
+Q1.
+
+numbers = []
+
+# Accept 6 integer values
+for i in range(6):
+    num = int(input("Enter number: "))
+    numbers.append(num)
+
+# Check duplicates
+if len(numbers) != len(set(numbers)):
+    print("DUPLICATES")
+else:
+    print("ALL UNIQUE")
+
+
+
+
+SLIP - 3
+
+Q1.
+
+# Create an empty set
+s = set()
+
+# Add elements
+n = int(input("How many values to add? "))
+for _ in range(n):
+    val = input("Enter value to add: ")
+    s.add(val)
+
+print("\nSet after adding elements:", s)
+
+# Remove element
+rem = input("\nEnter value to remove: ")
+if rem in s:
+    s.remove(rem)      # or s.discard(rem)
+    print("After removal:", s)
+else:
+    print("Value not found in set!")
+
+
+
+
+SLIP-4
+
+Q1.
+
+# Create a set
+s = set()
+
+n = int(input("How many values to add to the set? "))
+for _ in range(n):
+    val = int(input("Enter value: "))
+    s.add(val)
+
+# Display the set
+print("\nSet:", s)
+
+# Find maximum and minimum
+if s:  # check if set is not empty
+    maximum = max(s)
+    minimum = min(s)
+    print("Maximum value:", maximum)
+    print("Minimum value:", minimum)
+else:
+    print("Set is empty!")
+
+
+
+SLIP-5
+
+# Import array module
+import array
+
+# Create array of integers
+n = int(input("Enter number of elements: "))
+arr = array.array('i', [])  # 'i' → integer type
+
+# Input elements
+for i in range(n):
+    val = int(input(f"Enter element {i}: "))
+    arr.append(val)
+
+# Display array
+print("\nArray elements:", end=" ")
+for element in arr:
+    print(element, end=" ")
+print()
+
+# Access individual elements by index
+print("\nAccess individual elements:")
+for i in range(n):
+    print(f"Element at index {i}:", arr[i])
+
+
+
+SLIP-6
+
+Q1.
+
+# Import array module
+import array
+
+# Create an array
+n = int(input("Enter number of elements: "))
+arr = array.array('i', [])
+
+# Input elements
+for i in range(n):
+    val = int(input(f"Enter element {i}: "))
+    arr.append(val)
+
+# Display array
+print("\nArray elements:", arr)
+
+# Get element to count
+element = int(input("\nEnter element to find occurrences: "))
+
+# Count occurrences
+count = arr.count(element)
+print(f"The element {element} occurs {count} time(s) in the array.")
+
+
+
+SLIP-7
+
+Q1.
+
+# Import array module
+import array
+
+# Create an array
+n = int(input("Enter number of elements: "))
+arr = array.array('i', [])
+
+# Input elements
+for i in range(n):
+    val = int(input(f"Enter element {i}: "))
+    arr.append(val)
+
+# Display original array
+print("\nOriginal Array:", arr)
+
+# Reverse the array
+arr.reverse()  # built-in reverse method
+
+# Display reversed array
+print("Reversed Array:", arr)
+
+
+
+
+SLIP-8
+
+Q1.
+
+# Input list elements
+n = int(input("Enter number of elements in the list: "))
+numbers = []
+
+for i in range(n):
+    val = int(input(f"Enter element {i}: "))
+    numbers.append(val)
+                            #total=0
+# Calculate sum
+total = sum(numbers)  # using built-in sum() function
+                           #for i in range(n):
+                                #total+=numbers[i]
+# Display
+print("The sum of all elements in the list is:", total)
+
+
+
+
+SLIP-9
+
+Q1.
+
+def fact(n):
+    if n==1:
+        return 1
+    else:
+        return n*fact(n-1)
+
+n=int(input("enter number to find factorial"))
+print("Factorial is  ",fact(n))
+
+
+
+
+SLIP-10
+
+Q1.
+
+# Input the value of n
+n = int(input("Enter a number n: "))
+
+# Generate dictionary using dictionary comprehension
+squares_dict = {x: x*x for x in range(1, n+1)}
+
+# Display the dictionary
+print("Dictionary of squares:")
+print(squares_dict)
+
+
+
+
+#BST 
+
+# Binary Search Tree Implementation in Python
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+
+class BST:
+    def __init__(self):
+        self.root = None
+
+    # i. Create / Insert into BST
+    def insert(self, root, key):
+        if root is None:
+            return Node(key)
+        if key < root.data:
+            root.left = self.insert(root.left, key)
+        else:
+            root.right = self.insert(root.right, key)
+        return root
+
+    # ----------- DELETE FUNCTION ADDED HERE -----------
+    def delete(self, root, key):
+        if root is None:
+            return root
+
+        if key < root.data:
+            root.left = self.delete(root.left, key)
+
+        elif key > root.data:
+            root.right = self.delete(root.right, key)
+
+        else:
+            # Node with only one child or no child
+            if root.left is None:
+                return root.right
+            if root.right is None:
+                return root.left
+
+            # Node with two children
+            temp = self.findMin(root.right)
+            root.data = temp.data
+            root.right = self.delete(root.right, temp.data)
+
+        return root
+
+    # Used for delete operation
+    def findMin(self, node):
+        while node.left:
+            node = node.left
+        return node
+    # --------------------------------------------------
+
+    # ii. Count Non-Leaf Nodes
+    def count_non_leaf(self, root):
+        if root is None:
+            return 0
+        if root.left is None and root.right is None:
+            return 0
+        return 1 + self.count_non_leaf(root.left) + self.count_non_leaf(root.right)
+
+    # Count total nodes
+    def count_total_nodes(self, root):
+        if root is None:
+            return 0
+        return 1 + self.count_total_nodes(root.left) + self.count_total_nodes(root.right)
+
+    # Search
+    def search(self, root, key):
+        if root is None:
+            return False
+        if root.data == key:
+            return True
+        if key < root.data:
+            return self.search(root.left, key)
+        else:
+            return self.search(root.right, key)
+
+    # iii. Traversal Methods
+    def inorder(self, root):
+        if root:
+            self.inorder(root.left)
+            print(root.data, end=" ")
+            self.inorder(root.right)
+
+    def preorder(self, root):
+        if root:
+            print(root.data, end=" ")
+            self.preorder(root.left)
+            self.preorder(root.right)
+
+    def postorder(self, root):
+        if root:
+            self.postorder(root.left)
+            self.postorder(root.right)
+            print(root.data, end=" ")
+
+
+# -------- Main Program --------
+
+bst = BST()
+
+# Creating BST
+elements = [50, 30, 70, 20, 40, 60, 80]
+
+for num in elements:
+    bst.root = bst.insert(bst.root, num)
+
+print("Inorder Traversal:")
+bst.inorder(bst.root)
+
+print("\nPreorder Traversal:")
+bst.preorder(bst.root)
+
+print("\nPostorder Traversal:")
+bst.postorder(bst.root)
+
+print("\n\nNumber of Non-Leaf Nodes:", bst.count_non_leaf(bst.root))
+
+# Search
+key = int(input("\nEnter value to search: "))
+if bst.search(bst.root, key):
+    print("Value FOUND in BST")
+else:
+    print("Value NOT FOUND in BST")
+
+# Delete
+del_key = int(input("\nEnter value to delete: "))
+bst.root = bst.delete(bst.root, del_key)
+
+print("Inorder After Deletion:")
+bst.inorder(bst.root)
+print()
+
+
+
+# INDEGREE
+
+# Program to calculate indegree of each vertex using adjacency matrix
+
+n = int(input("Enter number of vertices: "))
+
+# Input adjacency matrix
+graph = []
+print("Enter adjacency matrix:")
+for i in range(n):
+    row = list(map(int, input().split()))
+    graph.append(row)
+
+# Calculate indegree
+indegree = [0] * n
+
+for col in range(n):
+    for row in range(n):
+        if graph[row][col] == 1:
+            indegree[col] += 1
+
+# Output indegree of each node
+for i in range(n):
+    print(f"Indegree of vertex {i} =", indegree[i])
+
+
+
+
+# OUT DEGREE
+
+# Program to calculate outdegree of each vertex using adjacency matrix
+
+n = int(input("Enter number of vertices: "))
+
+graph = []
+print("Enter adjacency matrix:")
+for i in range(n):
+    row = list(map(int, input().split()))
+    graph.append(row)
+
+# Calculate outdegree
+outdegree = [0] * n
+
+for row in range(n):
+    for col in range(n):
+        if graph[row][col] == 1:
+            outdegree[row] += 1
+
+# Output outdegree of each node
+for i in range(n):
+    print(f"Outdegree of vertex {i} =", outdegree[i])
+
+
+
+
+
+# LINEAR SEARCH
+
+# Linear Search using function
+
+def linear_search(arr, key):
+    for i in range(len(arr)):
+        if arr[i] == key:
+            return i     # return index
+    return -1            # not found
+
+
+# Main Program
+arr = [10, 20, 30, 40, 50]
+key = int(input("Enter element to search: "))
+
+result = linear_search(arr, key)
+
+if result != -1:
+    print("Element found at index:", result)
+else:
+    print("Element not found")
+
+
+
+
+# BINARY SEARCH
+
+# Binary Search using function
+
+def binary_search(arr, key):
+    low = 0
+    high = len(arr) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if arr[mid] == key:
+            return mid         # element found
+        elif key < arr[mid]:
+            high = mid - 1
+        else:
+            low = mid + 1
+
+    return -1                  # not found
+
+
+# Main Program
+arr = [10, 20, 30, 40, 50]     # must be sorted
+key = int(input("Enter element to search: "))
+
+result = binary_search(arr, key)
+
+if result != -1:
+    print("Element found at index:", result)
+else:
+    print("Element not found")
+
+
+
+
+
+SLIP - 11
+
+Q1.
+def fib(n):
+    a,b=0,1
+    for i in range(n):
+        print(a,end=" ")
+        a,b=b,a+b
+
+num=int(input("enter number"))
+fib(num)
+
+Q2.
+
+# Bubble Sort in Python
+
+nums = [5, 2, 9, 1, 3]   # sample list
+
+print("Original List:", nums)
+
+n = len(nums)
+
+for i in range(n):
+    for j in range(0, n - i - 1):
+        if nums[j] > nums[j + 1]:
+            nums[j], nums[j + 1] = nums[j + 1], nums[j]   # swap
+
+print("Sorted List:", nums)
+
+
+Q3.
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return 3.14 * self.radius * self.radius
+
+    def perimeter(self):
+        return 2 * 3.14 * self.radius
+
+# --- Main Program ---
+r = float(input("Enter radius of circle: "))
+
+c = Circle(r)
+
+print("Area of Circle:", c.area())
+print("Perimeter of Circle:", c.perimeter())
+
+
+
+
+SLIP-12
+Q1.
+
+n=int(input("enter no for n"))
+
+sq_dist={x:x*x for x in range(1,n+1)}
+
+print(sq_dist)
+
+
+Q2.
+# Merge Sort in Python
+
+def merge_sort(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2
+
+        left = arr[:mid]
+        right = arr[mid:]
+
+        merge_sort(left)
+        merge_sort(right)
+
+        i = j = k = 0
+
+        # Merge two halves
+        while i < len(left) and j < len(right):
+            if left[i] < right[j]:
+                arr[k] = left[i]
+                i += 1
+            else:
+                arr[k] = right[j]
+                j += 1
+            k += 1
+
+        # Copy remaining elements
+        while i < len(left):
+            arr[k] = left[i]
+            i += 1
+            k += 1
+
+        while j < len(right):
+            arr[k] = right[j]
+            j += 1
+            k += 1
+
+
+# --- Main Program ---
+nums = [38, 27, 43, 3, 9, 82, 10]
+print("Original List:", nums)
+
+merge_sort(nums)
+print("Sorted List:", nums)
+
+
+Q3.
+class ShoppingCart:
+    def __init__(self):
+        self.items = {}   # item : price
+
+    def add_item(self, item, price):
+        self.items[item] = price
+        print(item, "added.")
+
+    def remove_item(self, item):
+        if item in self.items:
+            del self.items[item]
+            print(item, "removed.")
+        else:
+            print(item, "not found in cart.")
+
+    def total_price(self):
+        return sum(self.items.values())
+
+
+# ---- Main Program ----
+cart = ShoppingCart()
+
+cart.add_item("Soap", 40)
+cart.add_item("Shampoo", 120)
+cart.add_item("Brush", 20)
+
+cart.remove_item("Brush")
+
+print("Total Price =", cart.total_price())
+
+
+
+
+
+SLIP_13
+
+Q1.
+# Dictionary
+my_dict = {"a": 5, "b": 2, "c": 9, "d": 1}
+
+# Sorting in Ascending order
+asc = dict(sorted(my_dict.items(), key=lambda item: item[1]))
+print("Ascending:", asc)
+
+# Sorting in Descending order
+desc = dict(sorted(my_dict.items(), key=lambda item: item[1], reverse=True))
+print("Descending:", desc)
+
+
+Q2.
+
+# Binary Search in Python
+
+def binary_search(arr, x):
+    low = 0
+    high = len(arr) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if arr[mid] == x:
+            return mid   # element found
+        elif arr[mid] < x:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return -1  # element not found
+
+
+# ---- Main Program ----
+arr = [10, 20, 30, 40, 50, 60]
+print("Array:", arr)
+
+x = int(input("Enter element to search: "))
+
+result = binary_search(arr, x)
+
+if result != -1:
+    print("Element found at index:", result)
+else:
+    print("Element not found!")
+
+
+Q3.
+
+# Quick Sort in Python
+
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[0]
+    left = [x for x in arr[1:] if x <= pivot]
+    right = [x for x in arr[1:] if x > pivot]
+
+    return quick_sort(left) + [pivot] + quick_sort(right)
+
+
+# ---- Main Program ----
+nums = [35, 12, 43, 8, 51]
+print("Original List:", nums)
+
+sorted_nums = quick_sort(nums)
+print("Sorted List:", sorted_nums)
+
+
+
+
+
+SLIP-14
+
+Q1.
+n=int(input("enter no for n"))
+
+sq={x:x*x for x in range(1,n+1)}
+
+print(sq)
+
+Q2.
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        # Move elements that are greater than key to one position ahead
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+
+# Main
+nums = [12, 11, 13, 5, 6]
+print("Original:", nums)
+
+insertion_sort(nums)
+
+print("Sorted:", nums)
+
+
+Q3.
+# Number of vertices
+n = int(input("Enter number of vertices: "))
+
+# Read adjacency matrix
+print("Enter adjacency matrix row by row (0/1):")
+adj = []
+for i in range(n):
+    row = list(map(int, input().split()))
+    adj.append(row)
+
+# Calculate indegree for each vertex
+indegree = [0] * n
+for j in range(n):
+    for i in range(n):
+        indegree[j] += adj[i][j]
+
+# Print indegrees
+for v in range(n):
+    print(f"Vertex {v} has indegree = {indegree[v]}")
+
+
+
+
+
+SLIP-15
+
+Q1.
+from collections import Counter
+
+d1 = {'a': 100, 'b': 200, 'c': 300}
+d2 = {'a': 300, 'b': 200, 'd': 400}
+
+result = Counter(d1) + Counter(d2)
+
+print(result)
+
+
+Q2.
+# Program to calculate Outdegree of a Graph
+
+# Number of vertices
+n = int(input("Enter number of vertices: "))
+
+# Read adjacency matrix
+print("Enter adjacency matrix:")
+adj = []
+for i in range(n):
+    row = list(map(int, input().split()))
+    adj.append(row)
+
+# Calculate outdegree for each vertex
+outdegree = [0] * n
+for i in range(n):
+    for j in range(n):
+        outdegree[i] += adj[i][j]
+
+# Display result
+for v in range(n):
+    print(f"Vertex {v} has outdegree = {outdegree[v]}")
+
+
+Q3.
+class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+
+    def area(self):
+        return self.length * self.width
+
+    def perimeter(self):
+        return 2 * (self.length + self.width)
+
+# Main program
+l = float(input("Enter length: "))
+w = float(input("Enter width: "))
+
+r = Rectangle(l, w)
+
+print("Area of Rectangle:", r.area())
+print("Perimeter of Rectangle:", r.perimeter())
+
+
+
+
+
+
+SLIP-16
+
+Q1.
+
+# Create a list of numbers
+numbers = [1, 2, 3, 4, 5]
+
+# Create list of tuples (number, square)
+result = [(n, n*n) for n in numbers]
+print("List of tuples:", result)
+
+# Display original list in reverse
+print("Original list in reverse:", numbers[::-1])
+
+
+Q2.
+# Static Stack Implementation in Python
+
+MAX = 5
+stack = [None] * MAX
+top = -1
+
+def push(item):
+    global top
+    if top == MAX - 1:
+        print("Stack Overflow!")
+    else:
+        top += 1
+        stack[top] = item
+        print(item, "pushed.")
+
+def pop():
+    global top
+    if top == -1:
+        print("Stack Underflow!")
+    else:
+        print("Popped:", stack[top])
+        top -= 1
+
+def display():
+    if top == -1:
+        print("Stack is Empty")
+    else:
+        print("Stack elements:")
+        for i in range(top, -1, -1):
+            print(stack[i])
+
+# ---- Main ----
+push(10)
+push(20)
+push(30)
+display()
+
+pop()
+display()
+
+
+Q3.
+def evaluate_postfix(expr):
+    stack = []
+
+    for ch in expr:
+        if ch.isdigit():           # if operand, push to stack
+            stack.append(int(ch))
+        else:                      # operator
+            b = stack.pop()
+            a = stack.pop()
+
+            if ch == '+':
+                stack.append(a + b)
+            elif ch == '-':
+                stack.append(a - b)
+            elif ch == '*':
+                stack.append(a * b)
+            elif ch == '/':
+                stack.append(a / b)
+
+    return stack.pop()
+
+
+# ---- Main ----
+expression = input("Enter postfix expression: ")   # Example: 23*54*+
+result = evaluate_postfix(expression)
+print("Result =", result)
+
+
+
+
+
+SLIP-17
+
+Q1.
+
+li=[1,2,3,4,5]
+total=sum(li)
+length=len(li)
+
+avg=total/length
+
+print("Avarage of list is ",avg)
+
+
+Q2.
+# Static Implementation of Queue in Python
+
+SIZE = 5
+queue = [None] * SIZE
+front = -1
+rear = -1
+
+def isFull():
+    return rear == SIZE - 1
+
+def isEmpty():
+    return front == -1 or front > rear
+
+def enqueue(item):
+    global rear, front
+    if isFull():
+        print("Queue Overflow! Cannot insert.")
+    else:
+        if front == -1:
+            front = 0
+        rear += 1
+        queue[rear] = item
+        print(item, "inserted")
+
+def dequeue():
+    global front
+    if isEmpty():
+        print("Queue Underflow! Cannot delete.")
+    else:
+        print("Deleted:", queue[front])
+        front += 1
+
+def display():
+    if isEmpty():
+        print("Queue is Empty")
+    else:
+        print("Queue elements:", queue[front:rear+1])
+
+# ---------- Main Program ----------
+while True:
+    print("\n1.Enqueue  2.Dequeue  3.Display  4.Exit")
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        item = int(input("Enter value: "))
+        enqueue(item)
+    elif ch == 2:
+        dequeue()
+    elif ch == 3:
+        display()
+    elif ch == 4:
+        break
+    else:
+        print("Invalid Choice")
+
+
+
+Q3.
+# Dynamic Implementation of Stack using Linked List
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class Stack:
+    def __init__(self):
+        self.top = None
+
+    def isEmpty(self):
+        return self.top is None
+
+    def isFull(self):
+        # For dynamic stack, full means memory full
+        return False
+
+    def push(self, value):
+        new_node = Node(value)
+        new_node.next = self.top
+        self.top = new_node
+        print(value, "pushed")
+
+    def pop(self):
+        if self.isEmpty():
+            print("Stack Underflow")
+        else:
+            print("Popped:", self.top.data)
+            self.top = self.top.next
+
+    def display(self):
+        if self.isEmpty():
+            print("Stack is empty")
+        else:
+            temp = self.top
+            print("Stack elements:")
+            while temp:
+                print(temp.data)
+                temp = temp.next
+
+# ----------- Main Program ------------
+s = Stack()
+
+while True:
+    print("\n1.Push  2.Pop  3.Display  4.Exit")
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        val = int(input("Enter value: "))
+        s.push(val)
+    elif ch == 2:
+        s.pop()
+    elif ch == 3:
+        s.display()
+    elif ch == 4:
+        break
+    else:
+        print("Invalid choice")
+
+
+
+
+
+SLIP-18
+
+Q1.
+
+tup1=(1,2,3,4,5)
+
+new_tup=(tup1[3],tup1[4])
+print(new_tup)
+
+print(tup1[::-1])
+
+
+Q2.
+
+# Simple Implementation of Priority Queue in Python
+
+class PriorityQueue:
+    def __init__(self):
+        self.queue = []
+
+    def enqueue(self, item, priority):
+        self.queue.append((priority, item))
+        print(item, "inserted with priority", priority)
+
+    def dequeue(self):
+        if not self.queue:
+            print("Priority Queue is empty")
+            return
+
+        # smallest priority value = highest priority
+        self.queue.sort()  
+        priority, item = self.queue.pop(0)
+        print("Deleted:", item, "(Priority:", priority, ")")
+
+    def display(self):
+        if not self.queue:
+            print("Priority Queue is empty")
+        else:
+            print("Priority Queue Elements:")
+            for p, i in sorted(self.queue):
+                print("Item:", i, " Priority:", p)
+
+
+# --------- Main Program ----------
+pq = PriorityQueue()
+
+while True:
+    print("\n1.Insert  2.Delete  3.Display  4.Exit")
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        item = input("Enter item: ")
+        p = int(input("Enter priority (smaller = high priority): "))
+        pq.enqueue(item, p)
+
+    elif ch == 2:
+        pq.dequeue()
+
+    elif ch == 3:
+        pq.display()
+
+    elif ch == 4:
+        break
+
+    else:
+        print("Invalid Choice")
+
+
+
+Q3.
+
+# Infix to Postfix Conversion using Stack
+
+def precedence(op):
+    if op in ('+', '-'):
+        return 1
+    if op in ('*', '/'):
+        return 2
+    if op == '^':
+        return 3
+    return 0
+
+def infix_to_postfix(expression):
+    stack = []
+    result = ""
+
+    for ch in expression:
+        if ch.isalnum():              # operand
+            result += ch
+
+        elif ch == '(':               # opening bracket
+            stack.append(ch)
+
+        elif ch == ')':               # closing bracket
+            while stack and stack[-1] != '(':
+                result += stack.pop()
+            stack.pop()               # remove '('
+
+        else:                         # operator
+            while stack and precedence(stack[-1]) >= precedence(ch):
+                result += stack.pop()
+            stack.append(ch)
+
+    # pop all remaining operators
+    while stack:
+        result += stack.pop()
+
+    return result
+
+
+# ---------- Main Program ----------
+exp = input("Enter infix expression: ")
+print("Postfix Expression:", infix_to_postfix(exp))
+
+
+
+
+
+
+SLIP-19
+
+Q1.
+
+# Sample tuple
+t = (10, 20, 30, 40, 50, 60, 70, 80, 90)
+
+# 5th element from front → index 4
+fifth_front = t[4]
+
+# 5th element from last → index -5
+fifth_last = t[-5]
+
+print("5th element from front:", fifth_front)
+print("5th element from last:", fifth_last)
+
+
+
+Q2.
+
+# Simple Implementation of Priority Queue in Python
+
+class PriorityQueue:
+    def __init__(self):
+        self.queue = []
+
+    def insert(self, item, priority):
+        self.queue.append((priority, item))
+        print("Inserted:", item, "Priority:", priority)
+
+    def delete(self):
+        if not self.queue:
+            print("Priority Queue is Empty")
+            return
+        
+        # Sort by priority (smallest = highest priority)
+        self.queue.sort()
+        priority, item = self.queue.pop(0)
+        print("Deleted:", item, "Priority:", priority)
+
+    def display(self):
+        if not self.queue:
+            print("Priority Queue is Empty")
+            return
+        
+        print("Priority Queue:")
+        for p, i in sorted(self.queue):
+            print("Item:", i, " Priority:", p)
+
+
+# ----------- MAIN MENU -------------
+pq = PriorityQueue()
+
+while True:
+    print("\n1.Insert  2.Delete  3.Display  4.Exit")
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        item = input("Enter item: ")
+        p = int(input("Enter priority: "))
+        pq.insert(item, p)
+
+    elif ch == 2:
+        pq.delete()
+
+    elif ch == 3:
+        pq.display()
+
+    elif ch == 4:
+        break
+
+    else:
+        print("Invalid Choice")
+
+
+
+Q3.
+
+
+# Dynamic Implementation of Stack in Python
+
+class Stack:
+    def __init__(self, size):
+        self.stack = []
+        self.size = size
+
+    def isEmpty(self):
+        return len(self.stack) == 0
+
+    def isFull(self):
+        return len(self.stack) == self.size
+
+    def push(self, item):
+        if self.isFull():
+            print("Stack is Full")
+        else:
+            self.stack.append(item)
+            print(item, "Pushed")
+
+    def pop(self):
+        if self.isEmpty():
+            print("Stack is Empty")
+        else:
+            print("Popped:", self.stack.pop())
+
+
+# -------- Main Program ----------
+size = int(input("Enter stack size: "))
+s = Stack(size)
+
+while True:
+    print("\n1.Push  2.Pop  3.Check Empty  4.Check Full  5.Exit")
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        item = input("Enter item: ")
+        s.push(item)
+
+    elif ch == 2:
+        s.pop()
+
+    elif ch == 3:
+        print("Stack Empty?", s.isEmpty())
+
+    elif ch == 4:
+        print("Stack Full?", s.isFull())
+
+    elif ch == 5:
+        break
+
+    else:
+        print("Invalid choice")
+
+
+
+
+
+SLIP-20
+
+Q1.
+num = 1   # starting number
+
+for row in range(1, 5):      # 4 rows
+    for col in range(row):   # print row number of values
+        print(num, end=" ")
+        num += 1
+    print()   # new line
+
+
+Q2.
+# Static Stack Implementation in Python
+
+MAX = 5
+stack = [None] * MAX
+top = -1
+
+def push(item):
+    global top
+    if top == MAX - 1:
+        print("Stack Overflow!")
+    else:
+        top += 1
+        stack[top] = item
+        print(item, "pushed.")
+
+def pop():
+    global top
+    if top == -1:
+        print("Stack Underflow!")
+    else:
+        print("Popped:", stack[top])
+        top -= 1
+
+def display():
+    if top == -1:
+        print("Stack is Empty")
+    else:
+        print("Stack elements:")
+        for i in range(top, -1, -1):
+            print(stack[i])
+
+# ---- Main ----
+push(10)
+push(20)
+push(30)
+display()
+
+pop()
+display()
+
+
+
+Q3.
+# Dynamic Implementation of Linear Queue in Python
+
+class Queue:
+    def __init__(self, size):
+        self.size = size
+        self.queue = []
+
+    def isEmpty(self):
+        return len(self.queue) == 0
+
+    def isFull(self):
+        return len(self.queue) == self.size
+
+    def enqueue(self, item):
+        if self.isFull():
+            print("Queue is Full!")
+        else:
+            self.queue.append(item)
+            print(item, "enqueued")
+
+    def dequeue(self):
+        if self.isEmpty():
+            print("Queue is Empty!")
+        else:
+            print("Dequeued:", self.queue.pop(0))
+
+    def display(self):
+        if self.isEmpty():
+            print("Queue is Empty!")
+        else:
+            print("Queue:", self.queue)
+
+
+# -------- MAIN PROGRAM --------
+size = int(input("Enter queue size: "))
+q = Queue(size)
+
+while True:
+    print("\n1.Enqueue  2.Dequeue  3.Display  4.Exit")
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        item = input("Enter item: ")
+        q.enqueue(item)
+
+    elif ch == 2:
+        q.dequeue()
+
+    elif ch == 3:
+        q.display()
+
+    elif ch == 4:
+        break
+
+    else:
+        print("Invalid Choice!")
+
+
+
+
+
+SLIP-21
+
+Q1.
+n=int(input("enter how many numbers"))
+
+li=[]
+
+for _ in range(n):
+    val=int(input("enter value"))
+    li.append(val)
+
+if len(li)!=len(set(li)):
+    print("Duplicate")
+else:
+    print("not duplicate")
+
+
+Q2.
+
+# Static Implementation of Queue in Python
+
+SIZE = 5
+queue = [None] * SIZE
+front = -1
+rear = -1
+
+def isFull():
+    return rear == SIZE - 1
+
+def isEmpty():
+    return front == -1 or front > rear
+
+def enqueue(item):
+    global rear, front
+    if isFull():
+        print("Queue Overflow! Cannot insert.")
+    else:
+        if front == -1:
+            front = 0
+        rear += 1
+        queue[rear] = item
+        print(item, "inserted")
+
+def dequeue():
+    global front
+    if isEmpty():
+        print("Queue Underflow! Cannot delete.")
+    else:
+        print("Deleted:", queue[front])
+        front += 1
+
+def display():
+    if isEmpty():
+        print("Queue is Empty")
+    else:
+        print("Queue elements:", queue[front:rear+1])
+
+# ---------- Main Program ----------
+while True:
+    print("\n1.Enqueue  2.Dequeue  3.Display  4.Exit")
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        item = int(input("Enter value: "))
+        enqueue(item)
+    elif ch == 2:
+        dequeue()
+    elif ch == 3:
+        display()
+    elif ch == 4:
+        break
+    else:
+        print("Invalid Choice")
+
+
+
+
+Q3.
+
+
+# Reverse String using Stack and Check Palindrome
+
+def reverse_string(s):
+    stack = []
+
+    # Push characters onto stack
+    for ch in s:
+        stack.append(ch)
+
+    # Pop characters to get reversed string
+    rev = ""
+    while stack:
+        rev += stack.pop()
+
+    return rev
+
+def is_palindrome(s):
+    return s == s[::-1]
+
+
+# -------- MAIN PROGRAM ----------
+s = input("Enter a string: ")
+
+rev = reverse_string(s)
+print("Reversed String:", rev)
+
+if is_palindrome(s):
+    print("The string is a Palindrome")
+else:
+    print("The string is NOT a Palindrome")
+
+
+
+
+
+SLIP-22
+
+Q1.
+t = (1, 2, 3, 2, 4, 5, 3, 6, 3)
+
+repeated = []
+
+for item in t:
+    if t.count(item) > 1 and item not in repeated:
+        repeated.append(item)
+
+print("Repeated items:", repeated)
+
+
+Q2.
+
+# Static Stack Implementation in Python
+
+class Stack:
+    def __init__(self, size):
+        self.size = size
+        self.stack = [None] * size  # fixed size
+        self.top = -1
+
+    def isEmpty(self):
+        return self.top == -1
+
+    def isFull(self):
+        return self.top == self.size - 1
+
+    def push(self, item):
+        if self.isFull():
+            print("Stack Overflow! Stack is Full.")
+        else:
+            self.top += 1
+            self.stack[self.top] = item
+            print(item, "pushed into stack")
+
+    def pop(self):
+        if self.isEmpty():
+            print("Stack Underflow! Stack is Empty.")
+        else:
+            item = self.stack[self.top]
+            self.top -= 1
+            print("Popped:", item)
+
+    def display(self):
+        if self.isEmpty():
+            print("Stack is Empty.")
+        else:
+            print("Stack elements:", self.stack[:self.top+1])
+
+
+# -------- MAIN PROGRAM --------
+size = int(input("Enter size of stack: "))
+s = Stack(size)
+
+while True:
+    print("\n1.Push  2.Pop  3.Display  4.Exit")
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        item = input("Enter item: ")
+        s.push(item)
+
+    elif ch == 2:
+        s.pop()
+
+    elif ch == 3:
+        s.display()
+
+    elif ch == 4:
+        break
+
+    else:
+        print("Invalid Choice!")
+
+
+Q3.
+
+# Circular Queue Implementation in Python
+
+class CircularQueue:
+    def __init__(self, size):
+        self.size = size
+        self.queue = [None] * size
+        self.front = -1
+        self.rear = -1
+
+    def isEmpty(self):
+        return self.front == -1
+
+    def isFull(self):
+        return (self.rear + 1) % self.size == self.front
+
+    def enqueue(self, item):
+        if self.isFull():
+            print("Queue is Full!")
+        else:
+            if self.front == -1:   # first element
+                self.front = 0
+            self.rear = (self.rear + 1) % self.size
+            self.queue[self.rear] = item
+            print(item, "enqueued")
+
+    def dequeue(self):
+        if self.isEmpty():
+            print("Queue is Empty!")
+        else:
+            item = self.queue[self.front]
+            print("Dequeued:", item)
+
+            if self.front == self.rear:  # queue becomes empty
+                self.front = self.rear = -1
+            else:
+                self.front = (self.front + 1) % self.size
+
+    def display(self):
+        if self.isEmpty():
+            print("Queue is Empty!")
+        else:
+            print("Circular Queue:", end=" ")
+            i = self.front
+            while True:
+                print(self.queue[i], end=" ")
+                if i == self.rear:
+                    break
+                i = (i + 1) % self.size
+            print()
+
+
+# -------- MAIN PROGRAM ----------
+size = int(input("Enter size of circular queue: "))
+cq = CircularQueue(size)
+
+while True:
+    print("\n1.Enqueue  2.Dequeue  3.Display  4.Exit")
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        item = input("Enter element: ")
+        cq.enqueue(item)
+
+    elif ch == 2:
+        cq.dequeue()
+
+    elif ch == 3:
+        cq.display()
+
+    elif ch == 4:
+        break
+
+    else:
+        print("Invalid Choice!")
+
+
+
+
+
+SLIP-23
+
+Q1.
+
+# Program to calculate average of numbers in a list
+
+numbers = []
+
+n = int(input("Enter how many numbers: "))
+
+for i in range(n):
+    value = float(input("Enter number: "))
+    numbers.append(value)
+
+avg = sum(numbers) / len(numbers)
+
+print("Average of numbers =", avg)
+
+
+Q2.
+
+# Static Queue Implementation in Python
+
+class Queue:
+    def __init__(self, size):
+        self.size = size
+        self.queue = [None] * size   # fixed size
+        self.front = -1
+        self.rear = -1
+
+    def isEmpty(self):
+        return self.front == -1
+
+    def isFull(self):
+        return self.rear == self.size - 1
+
+    def enqueue(self, item):
+        if self.isFull():
+            print("Queue Overflow! Queue is Full.")
+        else:
+            if self.front == -1:
+                self.front = 0
+            self.rear += 1
+            self.queue[self.rear] = item
+            print(item, "enqueued")
+
+    def dequeue(self):
+        if self.isEmpty():
+            print("Queue Underflow! Queue is Empty.")
+        else:
+            item = self.queue[self.front]
+            print("Dequeued:", item)
+            self.front += 1
+
+            if self.front > self.rear:  # queue becomes empty
+                self.front = self.rear = -1
+
+    def display(self):
+        if self.isEmpty():
+            print("Queue is Empty.")
+        else:
+            print("Queue elements:", self.queue[self.front : self.rear + 1])
+
+
+# -------- MAIN PROGRAM ----------
+size = int(input("Enter queue size: "))
+q = Queue(size)
+
+while True:
+    print("\n1.Enqueue  2.Dequeue  3.Display  4.Exit")
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        item = input("Enter element: ")
+        q.enqueue(item)
+
+    elif ch == 2:
+        q.dequeue()
+
+    elif ch == 3:
+        q.display()
+
+    elif ch == 4:
+        break
+
+    else:
+        print("Invalid choice!")
+
+
+
+Q3.
+# Reverse String using Stack and Check Palindrome
+
+def reverse_string(s):
+    stack = []
+
+    # Push characters onto stack
+    for ch in s:
+        stack.append(ch)
+
+    # Pop characters to get reversed string
+    rev = ""
+    while stack:
+        rev += stack.pop()
+
+    return rev
+
+def is_palindrome(s):
+    return s == s[::-1]
+
+
+# -------- MAIN PROGRAM ----------
+s = input("Enter a string: ")
+
+rev = reverse_string(s)
+print("Reversed String:", rev)
+
+if is_palindrome(s):
+    print("The string is a Palindrome")
+else:
+    print("The string is NOT a Palindrome")
+
+
+
+
+
+
+SLIP-24
+
+Q1.
+# Program to calculate sum of numbers in a list
+
+numbers = []
+
+n = int(input("Enter how many numbers: "))
+
+for i in range(n):
+    value = float(input("Enter number: "))
+    numbers.append(value)
+
+total = sum(numbers)
+
+print("Sum of numbers =", total)
+
+
+Q2.
+
+# Binary Search in Python
+
+def binary_search(arr, x):
+    low = 0
+    high = len(arr) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if arr[mid] == x:
+            return mid
+        elif arr[mid] < x:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return -1
+
+
+# -------- MAIN PROGRAM ----------
+n = int(input("Enter number of elements: "))
+arr = []
+
+print("Enter elements:")
+for i in range(n):
+    arr.append(int(input()))
+
+arr.sort()  # binary search needs sorted array
+print("Sorted Array:", arr)
+
+x = int(input("Enter element to search: "))
+
+pos = binary_search(arr, x)
+
+if pos != -1:
+    print("Element found at index:", pos)
+else:
+    print("Element not found.")
+
+
+
+Q3.
+
+# Program to calculate outdegree of each vertex using adjacency matrix
+
+n = int(input("Enter number of vertices: "))
+
+# Input adjacency matrix
+adj = []
+print("Enter adjacency matrix:")
+for i in range(n):
+    row = list(map(int, input().split()))
+    adj.append(row)
+
+# Calculate outdegree
+print("\nOutdegree of each vertex:")
+for i in range(n):
+    outdeg = 0
+    for j in range(n):
+        outdeg = outdeg + adj[i][j]
+    print("Vertex", i, ":", outdeg)
+
+
+
+
+
+SLIP-25
+
+Q1.
+
+# Program to count occurrences of a specified element in an array
+
+arr = [10, 20, 30, 20, 40, 20, 50]
+
+element = int(input("Enter element to count: "))
+count = 0
+
+for num in arr:
+    if num == element:
+        count = count + 1
+
+print("Number of occurrences of", element, "is:", count)
+
+
+
+Q2.
+
+# Binary Search in Python
+
+def binary_search(arr, x):
+    low = 0
+    high = len(arr) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if arr[mid] == x:
+            return mid
+        elif arr[mid] < x:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return -1
+
+
+# -------- MAIN PROGRAM ----------
+n = int(input("Enter number of elements: "))
+arr = []
+
+print("Enter elements:")
+for i in range(n):
+    arr.append(int(input()))
+
+arr.sort()  # binary search needs sorted array
+print("Sorted Array:", arr)
+
+x = int(input("Enter element to search: "))
+
+pos = binary_search(arr, x)
+
+if pos != -1:
+    print("Element found at index:", pos)
+else:
+    print("Element not found.")
+
+
+
+Q3.
+
+# Program to create Circle class to compute area and perimeter
+
+class Circle:
+
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return 3.14 * self.radius * self.radius
+
+    def perimeter(self):
+        return 2 * 3.14 * self.radius
+
+
+# Main Program
+r = float(input("Enter radius of circle: "))
+c = Circle(r)
+
+print("Area of Circle:", c.area())
+print("Perimeter of Circle:", c.perimeter())
